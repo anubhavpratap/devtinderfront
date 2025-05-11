@@ -4,11 +4,12 @@ import BASE_URL from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { removeOneFeed } from "../utils/feedSlice";
 
-const UserCard = ({user}) => {
+const UserCard = ({user,feed}) => {
   const {firstName,lastName,photoUrl,age,gender,about,_id} = user;
   const dispatch = useDispatch();
   const handleFeedRequest = async (status,_id) => {
     try {
+      if(!feed) return;
       await axios.post(BASE_URL+"/request/send/"+status+"/"+_id,{},{withCredentials:true,});
       dispatch(removeOneFeed(_id));
     } catch (error) {

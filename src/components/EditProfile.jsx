@@ -124,6 +124,7 @@ const EditProfile = ({ user }) => {
 
         <UserCard
           user={{ firstName, lastName, age, gender, photoUrl, about }}
+          feed = {false}
         />
       </div>
 
