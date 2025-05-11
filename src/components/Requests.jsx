@@ -34,7 +34,7 @@ const Requests = () => {
     if(requests.length == 0) return <h1 className='flex justify-center font-bold'>No Requests</h1>
     return (
         <div>
-            <h1 className=' text-center font-bold text-2xl'>Connections</h1>
+            <h1 className=' text-center font-bold text-2xl'>Requests</h1>
             {requests.map((request)=>(
                 <div key = {request._id} className="card card-side bg-base-300 shadow-sm h-50 mx-10 my-10 w-300">
                     <figure>
