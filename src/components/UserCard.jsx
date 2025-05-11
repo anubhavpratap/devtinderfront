@@ -8,12 +8,12 @@ const UserCard = ({user}) => {
         <img
           src={photoUrl}
           alt="Photo"
-          className="rounded-xl"
+          className="rounded-xl h-80 w-70"
         />
       </figure>
       <div className="card-body items-center text-center">
         <h2 className="card-title">{firstName+" "+ lastName}</h2>
-        {age && gender && <p>{age+ " "+ gender}</p>}
+        {age && gender && <p>{age+ ", "+ gender}</p>}
         <p>
           {about}
         </p>

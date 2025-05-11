@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
+import { removeFeed } from "../utils/feedSlice";
+import { removeConnections } from "../utils/connectionSlice";
+import { removeRequests } from "../utils/requestSlice";
 
 const NavBar = () => {
   const user = useSelector((store) => store.user);
@@ -14,6 +17,9 @@ const NavBar = () => {
     try {
       await axios.post(BASE_URL+"/logout",{},{withCredentials:true});
       dispatch(removeUser());
+      dispatch(removeFeed());
+      dispatch(removeConnections());
+      dispatch(removeRequests());
       navigate("/login");
         
     } catch (error) {
@@ -36,7 +42,7 @@ const NavBar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user.photoUrl}
               />
             </div>
           </div>
@@ -51,7 +57,10 @@ const NavBar = () => {
               </Link>
             </li>
             <li>
-              <a>Settings</a>
+              <Link to = "/connections">Connections</Link>
+            </li>
+            <li>
+              <Link to = "/requests">Requests</Link>
             </li>
             <li>
               <a onClick={handleLogout}>Logout</a>
