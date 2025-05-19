@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ConnectionCard = ({connec}) => {
   return (
@@ -7,13 +8,20 @@ const ConnectionCard = ({connec}) => {
         <img
           src={connec.photoUrl}
           alt="profile"
-          className="h-50 w-50 m-8"
+          className="object-cover h-50 w-50 m-8"
           
         />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">{connec.firstName + " "+connec.lastName}</h2>
-        <p>{connec.about}</p>
+      <div className="card-body flex flex-col justify-between">
+        <div>
+          <h2 className="card-title">
+            {connec.firstName + " " + connec.lastName}
+          </h2>
+          <p>{connec.about}</p>
+        </div>
+        <Link to={"/chat/" + connec._id}>
+              <button className="btn btn-primary">Chat</button>
+        </Link>
       </div>
     </div>
   );
