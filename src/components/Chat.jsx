@@ -28,6 +28,17 @@ const Chat = () => {
     scrollToBottom();
   }, [messages]);
 
+  const groupMessagesByDate = (messages) => {
+    return messages.reduce((groups, message) => {
+      const date = new Date(message.msgTime).toDateString();
+      //console.log(date)
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      return groups;
+    }, {});
+  };
   
 
 useEffect(() => {
@@ -53,10 +64,11 @@ useEffect(() => {
     });
 
     const chatMessages = chat?.data?.messages.map((msg) => {
-      const { senderId, text } = msg;
+      const { senderId, text,createdAt } = msg;
       return {
         firstName: senderId?.firstName,
         lastName: senderId?.lastName,
+        msgTime: createdAt, 
         text,
       };
     });
@@ -112,8 +124,19 @@ useEffect(() => {
     setNewMessage("");
   };
 
+  function extractTime(isoString) {
+    const date = new Date(isoString);
+    return date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  const groupedMessages = groupMessagesByDate(messages);
+  
+  
   return (
-    <div className="w-3/4 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col">
+    <div className="w-2/4 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col">
       <h1 className="p-5 border-b border-gray-600 flex items-center justify-between">
         <div>
           Chat with {targetUserName}
@@ -133,7 +156,12 @@ useEffect(() => {
         </div>
       </h1>
       <div className="flex-1 overflow-scroll p-5">
-        {messages.map((msg, index) => (
+    {Object.entries(groupedMessages).map(([date, msgs]) => (
+      <div key={date}>
+        <div className="text-center text-sm text-gray-400 my-4">
+          {date}
+        </div>
+        {msgs.map((msg, index) => (
           <div
             key={index}
             className={
@@ -143,14 +171,23 @@ useEffect(() => {
           >
             <div className="chat-header">
               {`${msg.firstName} ${msg.lastName}`}
-              <time className="text-xs opacity-50"> 2 hours ago</time>
+              
             </div>
-            <div className="chat-bubble">{msg.text}</div>
+            <div className="chat-bubble">
+                {msg.text}
+                <br/>
+                <time className="text-xs opacity-50">
+                {extractTime(msg.msgTime)}
+              </time>
+
+            </div>
             <div className="chat-footer opacity-50">Seen</div>
           </div>
         ))}
-        <div ref={messagesEndRef} />
       </div>
+    ))}
+    <div ref={messagesEndRef} />
+  </div>
       <div className="p-5 border-t border-gray-600 flex items-center gap-2">
         <input
           value={newMessage}
