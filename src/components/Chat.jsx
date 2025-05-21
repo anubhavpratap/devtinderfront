@@ -31,7 +31,6 @@ const Chat = () => {
   const groupMessagesByDate = (messages) => {
     return messages.reduce((groups, message) => {
       const date = new Date(message.msgTime).toDateString();
-      //console.log(date)
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -92,8 +91,8 @@ useEffect(() => {
       targetUserId,
     });
 
-    socket.on("messageReceived", ({ firstName, lastName, text }) => {
-      setMessages((messages) => [...messages, { firstName, lastName, text }]);
+    socket.on("messageReceived", ({ firstName, lastName, text,createdAt }) => {
+      setMessages((messages) => [...messages, { firstName, lastName, text,msgTime:createdAt }]);
     });
 
     socket.on("userOnlineStatus", ({ incomingId, isOnline, lastSeen }) => {
@@ -181,7 +180,6 @@ useEffect(() => {
               </time>
 
             </div>
-            <div className="chat-footer opacity-50">Seen</div>
           </div>
         ))}
       </div>
