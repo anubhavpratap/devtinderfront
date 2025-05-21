@@ -15,7 +15,7 @@ const Chat = () => {
   const user = useSelector((store) => store.user);
   const userId = user?._id;
 
-  const socketRef = useRef(null); // ✅ keep the same socket across the component
+  const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   const [targetUserName, setTargetUserName] = useState("");

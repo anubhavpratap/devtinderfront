@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useState } from "react";
 import { addUser } from "../utils/userSlice";
+import dotenv from 'dotenv';
 
 const plans = [
   {
@@ -31,6 +32,7 @@ const MembershipPage = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
+  const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
 
   const triggerToast = (message, type = "success") => {
     setToastMessage(message);
@@ -63,7 +65,7 @@ const MembershipPage = () => {
     <PayPalScriptProvider
       options={{
         "client-id":
-          "Ab15pe2mSEv1XlXPkA9cz_iAQg1nIv_d3Qi9bA3pXY31aXinCRp0AdFukI6iGHtdIImok-OGPGMR9Ufc",
+          clientId,
       }}
     >
       <div className="min-h-screen bg-base-100 py-12 px-4 flex flex-col items-center relative">
