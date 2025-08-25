@@ -2,7 +2,7 @@
 # devTinder
 
 A modern, full-stack web application for developers to connect, chat, and collaborate—think "Tinder for Developers."  
-[Live Demo](https://devtinder.biz/)
+[Live Demo](https://devtinderfront.vercel.app)
 
 ## Table of Contents
 
